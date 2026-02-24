@@ -3,6 +3,8 @@ import random
 from datetime import datetime, timedelta
 from octofit_tracker.models import User, Team, Activity
 
+# Populate the octofit_db database with test data
+
 USERS = [
     {'name': 'Alice', 'email': 'alice@example.com', 'is_superhero': False},
     {'name': 'Bob', 'email': 'bob@example.com', 'is_superhero': True},
