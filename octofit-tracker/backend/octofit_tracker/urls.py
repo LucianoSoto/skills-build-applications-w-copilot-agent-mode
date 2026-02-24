@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from . import views
+import os
+from django.http import JsonResponse
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -25,8 +27,19 @@ router.register(r'activities', views.ActivityViewSet)
 router.register(r'workouts', views.WorkoutViewSet)
 router.register(r'leaderboard', views.LeaderboardViewSet)
 
+def api_root(request):
+    codespace_name = os.environ.get('CODESPACE_NAME')
+    if codespace_name:
+        base_url = f'https://{codespace_name}-8000.app.github.dev/api/'
+    else:
+        base_url = 'http://localhost:8000/api/'
+    return JsonResponse({
+        'message': 'Bienvenido a la API de Octofit Tracker',
+        'api_base_url': base_url
+    })
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('', views.api_root, name='api_root'),
+    path('', api_root, name='api_root'),
 ]
